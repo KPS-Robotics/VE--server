@@ -9,9 +9,10 @@ services:
       - RUST_LOG=info
     restart: unless-stopped
     networks:
-      - scylla_network
+      - ve_network
+
   scylla:
-    image: scylladb/scylla
+    image: scylladb/scylla:6.1
     container_name: some-scylla
     ports:
       - "9042:9042"  # CQL port
@@ -20,7 +21,16 @@ services:
       - SCYLLA_CLUSTER_NAME=mycluster
       - SCYLLA_LISTEN_ADDRESS=0.0.0.0
     networks:
-      - scylla_network
+      - ve_network
+
+  redis:
+    image: redis:7.4.0
+    container_name: some-redis
+    ports:
+      - "6379:6379"  # Redis port
+    networks:
+      - ve_network
+
 networks:
-  scylla_network:
+  ve_network:
     driver: bridge
