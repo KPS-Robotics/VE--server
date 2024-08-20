@@ -1,0 +1,39 @@
+CREATE KEYSPACE ve_keyspace WITH REPLICATION = { 
+    'class' : 'SimpleStrategy', 
+    'replication_factor' : 1 
+};
+
+USE ve_keyspace;
+
+CREATE TABLE users (
+    user_id UUID PRIMARY KEY,
+    firstName TEXT,
+    lastName TEXT,
+    email TEXT,
+    password TEXT,
+    point INT
+);
+
+CREATE MATERIALIZED VIEW users_by_firstName AS
+    SELECT * FROM users
+    WHERE firstName IS NOT NULL
+    PRIMARY KEY (firstName, user_id);
+CREATE MATERIALIZED VIEW users_by_lastName AS
+    SELECT * FROM users
+    WHERE lastName IS NOT NULL
+    PRIMARY KEY (lastName, user_id);
+CREATE MATERIALIZED VIEW users_by_email AS
+    SELECT * FROM users
+    WHERE email IS NOT NULL
+    PRIMARY KEY (email, user_id);
+
+CREATE TABLE users_by_logs (
+    log_id UUID PRIMARY KEY,
+    userId UUID,
+    firstName TEXT,
+    lastName TEXT,
+    email TEXT,
+    time TIMESTAMP,
+    point INT
+);
+

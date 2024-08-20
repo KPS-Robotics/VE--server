@@ -10,6 +10,17 @@
 
 - Redis (Caching)
 
-## Authorization Flows
+## how to execute project
+```fish
+#only linux
+chmod +x dockerBuild.fish
+./dockerBuild.fish
+```
 
-## How The VE: Backend Server Communicate With a Machine
+## Project Structure
+
+## how to work
+
+### Authorization Flows
+
+### How The VE: Backend Server Communicate With a Machine
