@@ -7,33 +7,59 @@ USE ve_keyspace;
 
 CREATE TABLE users (
     user_id UUID PRIMARY KEY,
-    firstName TEXT,
-    lastName TEXT,
+    first_name TEXT,
+    last_name TEXT,
     email TEXT,
     password TEXT,
     point INT
 );
 
-CREATE MATERIALIZED VIEW users_by_firstName AS
+CREATE MATERIALIZED VIEW users_by_first_name AS
     SELECT * FROM users
-    WHERE firstName IS NOT NULL
-    PRIMARY KEY (firstName, user_id);
-CREATE MATERIALIZED VIEW users_by_lastName AS
+    WHERE first_name IS NOT NULL
+    PRIMARY KEY (first_name, user_id);
+
+CREATE MATERIALIZED VIEW users_by_last_name AS
     SELECT * FROM users
-    WHERE lastName IS NOT NULL
-    PRIMARY KEY (lastName, user_id);
+    WHERE last_name IS NOT NULL
+    PRIMARY KEY (last_name, user_id);
+
 CREATE MATERIALIZED VIEW users_by_email AS
     SELECT * FROM users
     WHERE email IS NOT NULL
     PRIMARY KEY (email, user_id);
 
-CREATE TABLE users_by_logs (
+CREATE TABLE user_logs (
     log_id UUID PRIMARY KEY,
-    userId UUID,
-    firstName TEXT,
-    lastName TEXT,
+    user_id UUID,
+    first_name TEXT,
+    last_name TEXT,
     email TEXT,
     time TIMESTAMP,
     point INT
 );
+CREATE MATERIALIZED VIEW user_logs_by_user_id AS
+    SELECT * FROM user_logs
+    WHERE user_id IS NOT NULL
+    PRIMARY KEY (user_id, log_id);
+
+CREATE MATERIALIZED VIEW user_logs_by_first_name AS
+    SELECT * FROM user_logs
+    WHERE first_name IS NOT NULL
+    PRIMARY KEY (first_name, log_id);
+
+CREATE MATERIALIZED VIEW user_logs_by_last_name AS
+    SELECT * FROM user_logs
+    WHERE last_name IS NOT NULL
+    PRIMARY KEY (last_name, log_id);
+
+CREATE MATERIALIZED VIEW user_logs_by_email AS
+    SELECT * FROM user_logs
+    WHERE email IS NOT NULL
+    PRIMARY KEY (email, log_id);
+
+CREATE MATERIALIZED VIEW user_logs_by_time AS
+    SELECT * FROM user_logs
+    WHERE time IS NOT NULL
+    PRIMARY KEY (time, log_id);
 
